@@ -23,8 +23,7 @@ class SimulatedSensors:
   def send_imu_message(self, simulator_state: 'SimulatorState'):
     for _ in range(5):
       dat = messaging.new_message('accelerometer', valid=True)
-      dat.accelerometer.sensor = 4
-      dat.accelerometer.type = 0x10
+      dat.accelerometer.source = log.SensorEventData.SensorSource.bno055
       dat.accelerometer.timestamp = dat.logMonoTime  # TODO: use the IMU timestamp
       dat.accelerometer.init('acceleration')
       dat.accelerometer.acceleration.v = [simulator_state.imu.accelerometer.x, simulator_state.imu.accelerometer.y, simulator_state.imu.accelerometer.z]
@@ -32,8 +31,7 @@ class SimulatedSensors:
 
       # copied these numbers from locationd
       dat = messaging.new_message('gyroscope', valid=True)
-      dat.gyroscope.sensor = 5
-      dat.gyroscope.type = 0x10
+      dat.gyroscope.source = log.SensorEventData.SensorSource.lsm6ds3
       dat.gyroscope.timestamp = dat.logMonoTime  # TODO: use the IMU timestamp
       dat.gyroscope.init('gyroUncalibrated')
       dat.gyroscope.gyroUncalibrated.v = [simulator_state.imu.gyroscope.x, simulator_state.imu.gyroscope.y, simulator_state.imu.gyroscope.z]

@@ -48,3 +48,26 @@ Start bridge processes located in tools/sim:
 ``` bash
 ./run_bridge.py
 ```
+
+## Startup architecture and commands
+
+The simulator uses two cooperating processes:
+
+1. **openpilot manager and services** — start with `./openpilot/tools/sim/launch_openpilot.sh` from the repository root. This launcher starts the manager; the manager entry point is `openpilot/system/manager/manager.py`.
+2. **MetaDrive simulator bridge** — start with `python3 openpilot/tools/sim/run_bridge.py` from the repository root. This launches the simulator and exchanges vehicle, sensor, and control messages with the running openpilot services.
+
+Start them in separate terminals, with the repository virtual environment activated in each:
+
+```bash
+cd /workspace/proj2609/1030-openpilot/openpilot
+source .venv/bin/activate
+./openpilot/tools/sim/launch_openpilot.sh
+```
+
+```bash
+cd /workspace/proj2609/1030-openpilot/openpilot
+source .venv/bin/activate
+python3 openpilot/tools/sim/run_bridge.py
+```
+
+The manager launcher and simulator bridge are both required for the full simulation. Start the manager first, then the bridge.
